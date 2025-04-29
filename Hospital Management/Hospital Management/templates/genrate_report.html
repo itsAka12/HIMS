@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Patient Report</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #ede7f6);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #6200ea;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            background: #6200ea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #3700b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generate Patient Report</h1>
+        <form id="reportForm">
+            <div class="form-group">
+                <label for="problem">Problem</label>
+                <textarea id="problem" name="problem" rows="4" placeholder="Describe the patient's problem" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="medicine">Medicine Prescribed</label>
+                <textarea id="medicine" name="medicine" rows="4" placeholder="Enter prescribed medicines" required></textarea>
+            </div>
+            <button type="button" id="generatePDF">Generate PDF</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        document.getElementById('generatePDF').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const patientName = "{{ patient.name }}";
+            const doctorName = "{{ doctor.name }}";
+            const problem = document.getElementById('problem').value;
+            const medicine = document.getElementById('medicine').value;
+
+            doc.setFont('Helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text("Patient Report", 105, 20, null, null, 'center');
+
+            doc.setFont('Helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.text(`Patient Name: ${patientName}`, 20, 40);
+            doc.text(`Doctor Name: ${doctorName}`, 20, 50);
+            doc.text(`Problem:`, 20, 70);
+            doc.text(problem, 20, 80, { maxWidth: 170 });
+            doc.text(`Medicine Prescribed:`, 20, 110);
+            doc.text(medicine, 20, 120, { maxWidth: 170 });
+
+            doc.save(`${patientName}_report.pdf`);
+        });
+    </script>
+</body>
+</html>

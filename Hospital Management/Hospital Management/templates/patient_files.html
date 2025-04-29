@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #e3f2fd, #ede7f6);
+        margin: 0;
+        padding: 20px;
+        color: #333;
+    }
+
+
+    .table-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        padding: 20px;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        font-size: 1em;
+        color: #333;
+    }
+
+    th {
+        background: linear-gradient(135deg, #6200ea, #304ffe);
+        color: white;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background: #e8f5e9;
+        transition: all 0.3s ease;
+    }
+
+    td a {
+        color: #1e88e5;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    td a:hover {
+        color: #0d47a1;
+        text-decoration: underline;
+    }
+
+    .no-files {
+        text-align: center;
+        font-size: 1.2em;
+        color: #757575;
+        margin-top: 20px;
+    }
+</style>
+
+<body>
+    <div class="table-container">
+        <h1>Uploaded Files for {{ patient.name }}</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Filename</th>
+                    <th>Upload Time</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ file.filename }}</td>
+                        <td>{{ file.time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td><a href="/download/{{ file.id }}">Download</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if not files %}
+            <p class="no-files">No files uploaded yet for this patient.</p>
+        {% endif %}
+    </div>
+</body>
+{% endblock content %}

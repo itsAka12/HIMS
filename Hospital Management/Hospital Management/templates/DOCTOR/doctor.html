@@ -1,0 +1,163 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #e3f2fd, #c8e6c9);
+        margin: 0;
+        padding: 0;
+    }
+
+    header img {
+        height: 60px;
+        width: 80px;
+        position: absolute;
+        top: 15px;
+        left: 25px;
+    }
+
+    header .page {
+        position: absolute;
+        top: 30px;
+        right: 50px;
+        font-size: 1.3em;
+        font-weight: bold;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 1.8em;
+    }
+
+    .dashboard {
+        padding: 30px;
+        max-width: 1200px;
+        margin: 20px auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .hello {
+        background: #4caf50;
+        color: white;
+        margin: 0;
+        padding: 15px 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 1.2em;
+        margin-bottom: 25px;
+    }
+
+    .dashboard h2 {
+        color: #1976d2;
+        margin-bottom: 20px;
+    }
+
+    .intro-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        gap: 25px;
+    }
+
+    .intro-card {
+        background: linear-gradient(135deg, #fff, #e3f2fd);
+        border: none;
+        border-radius: 15px;
+        padding: 25px;
+        flex: 1 1 30%;
+        max-width: 30%;
+        text-align: center;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .intro-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .intro-card img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .intro-card:hover img {
+        transform: scale(1.1);
+    }
+
+    .intro-card h3 {
+        color: #004ba0;
+        font-size: 1.4em;
+        margin-bottom: 10px;
+    }
+
+    .intro-card p {
+        color: #333;
+        font-size: 1em;
+    }
+
+    .intro-card:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.5);
+        z-index: -1;
+        transition: all 0.3s ease;
+    }
+
+    .intro-card:hover:before {
+        background: rgba(255, 255, 255, 0.7);
+    }
+
+    @media (max-width: 768px) {
+        .intro-card {
+            max-width: 100%;
+        }
+    }
+</style>
+
+<section id="home" class="dashboard">
+    <div class="hello">
+        <p>Welcome, Dr. {{ doctor.name }}</p>
+    </div>
+
+    <h2>Welcome to Your Dashboard</h2>
+    <p>Manage your appointments, view patient records, and access reports effortlessly.</p>
+
+    <div class="intro-section">
+        <a class="intro-card" href="{{ url_for('doc_profile', doctor_id=session['user_id']) }}">
+            <h3>Profile</h3>
+            <p>Check your details</p>
+        </a>
+        <a class="intro-card" href="{{ url_for('doctorsPatients', doctor_id=session['user_id']) }}">
+            <h3>Appointments</h3>
+            <p>Manage your appointments</p>
+        </a>
+        <a class="intro-card" href="{{ url_for('allPatients', doctor_id=session['user_id']) }}">
+            <h3>Total Patients</h3>
+            <p>View all your patients</p>
+        </a>
+    </div>
+</section>
+
+<script>
+    // Example of JavaScript interactivity (optional)
+    const cards = document.querySelectorAll('.intro-card');
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.style.transform = 'translateY(-5px)';
+            setTimeout(() => card.style.transform = '', 200);
+        });
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #e3f2fd, #c8e6c9);
+        color: #333;
+    }
+
+    .logout-button, .feedback-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .logout-button {
+        background-color: #193070;
+        color: white;
+    }
+
+    .logout-button:hover {
+        background-color: #10234c;
+        transform: scale(1.05);
+    }
+
+    .feedback-button {
+        background-color: #1aad06;
+        color: white;
+    }
+
+    .feedback-button:hover {
+        background-color: #0e7503;
+        transform: scale(1.05);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    .profile-container, .feedback {
+        margin: 40px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        max-width: 800px;
+    }
+
+    .profile-container {
+        text-align: center;
+    }
+
+    .profile-container img {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+    }
+
+    .profile-details p {
+        margin: 8px 0;
+        font-size: 1em;
+        color: #333;
+    }
+
+    .profile-details strong {
+        color: #004ba0;
+    }
+
+    .feedback h2 {
+        text-align: center;
+        color: #1976d2;
+        margin-bottom: 20px;
+    }
+
+    textarea {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 1em;
+        resize: vertical;
+    }
+
+    textarea:focus {
+        border-color: #4caf50;
+        outline: none;
+        box-shadow: 0 0 6px rgba(76, 175, 80, 0.5);
+    }
+
+    button {
+        display: block;
+        margin: 20px auto;
+    }
+</style>
+
+<div class="profile-container">
+    <h2>Doctor's Profile</h2>
+    <div class="profile-image">
+        <img src="https://via.placeholder.com/100" alt="Doctor's Photo">
+    </div>
+    <div class="profile-details">
+        <p><strong>Name:</strong> {{ doctor.name }}</p>
+        <p><strong>Email:</strong> {{ doctor.email }}</p>
+        <p><strong>Phone:</strong> {{ doctor.phone }}</p>
+        <p><strong>Specialization:</strong> {{ doctor.specialist }}</p>
+    </div>
+</div>
+
+<section class="feedback">
+    <h2>Feedback</h2>
+    <form action="submit_feedback.php" method="post">
+        <label for="feedback">We value your feedback:</label>
+        <textarea id="feedback" name="feedback" rows="5" placeholder="Enter your feedback here..." required></textarea>
+        <button type="submit" class="feedback-button">Submit Feedback</button>
+    </form>
+</section>
+
+<script>
+    // Add JavaScript interactivity if needed
+</script>
+{% endblock content %}

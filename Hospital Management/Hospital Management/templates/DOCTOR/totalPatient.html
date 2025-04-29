@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #e3f2fd, #f1f8e9);
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    .dashboard {
+        padding: 30px;
+        max-width: 1000px;
+        margin: 40px auto;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+    }
+
+    .hello {
+        background-color: #a5d6a7;
+        color: #2e7d32;
+        padding: 15px;
+        border-radius: 50px;
+        margin-bottom: 30px;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .dashboard h2 {
+        color: #1976d2;
+        margin-bottom: 25px;
+        font-size: 1.8em;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        background-color: #e8f5e9;
+        border: 1px solid #4caf50;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 15px 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: left;
+    }
+
+    li:hover {
+        transform: scale(1.03);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    li strong {
+        color: #4caf50;
+    }
+
+    li button {
+        background-color: #1976d2;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 15px;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    li button:hover {
+        background-color: #004ba0;
+    }
+
+    li button a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    li button a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<section class="dashboard">
+    <div class="hello">
+        <p>Welcome, Dr.{{ doctor.name }}</p>
+    </div>
+
+    <h2>All the Patient's Information</h2>
+    <ul>
+        {% for patient in patients %}
+            <li>
+                <p><strong>Patient ID:</strong> {{ patient.patient_id }}</p>
+                <p><strong>Patient Name:</strong> {{ patient.name }}</p>
+                <p><strong>Email:</strong> {{ patient.email }}</p>
+                <button><a href="{{ url_for('upload_file', patient_id=patient.patient_id) }}">Upload Report</a></button>
+                <button><a href="{{ url_for('generate', id=patient.patient_id, doc_id=doctor.doctor_id) }}">Generate Report</a></button>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock content %}
